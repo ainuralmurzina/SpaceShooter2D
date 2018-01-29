@@ -7,6 +7,7 @@ public class EnemyController : MonoBehaviour {
 	public float speed;
 	public GameObject shot;
 	public Transform shotSpawnPoint;
+	public GameObject explosion;
 
 	private Rigidbody2D myRigidbody;
 	private Vector2 direction;
@@ -37,9 +38,4 @@ public class EnemyController : MonoBehaviour {
 		}
 	}
 
-	void OnTriggerEnter2D(Collider2D other){
-		if (other.name.Contains("ShotPlayer")) {
-			Destroy (this.gameObject);
-		}
-	}
 }

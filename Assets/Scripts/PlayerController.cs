@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour {
 	public float speed;
 	public GameObject shot;
 	public Transform shotSpawnPoint;
+	public GameObject explosion;
 
 	private Rigidbody2D myRigidbody;
 	private Vector2 direction;
@@ -47,9 +48,15 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D other){
-		if (other.name != "Destroyer" && !other.name.Contains("ShotPlayer")) {
+		if (other.tag == "Enemy") {
+			GameObject expEnemy = Instantiate (explosion, other.transform.position, Quaternion.identity);
+			GameObject expPlayer = Instantiate (explosion, transform.position, Quaternion.identity);
+
 			Destroy (other.gameObject);
 			Destroy (this.gameObject);
+
+			Destroy (expEnemy, 2f);
+			Destroy (expPlayer, 2f);
 		}
 	}
 
