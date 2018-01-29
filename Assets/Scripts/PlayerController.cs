@@ -45,4 +45,12 @@ public class PlayerController : MonoBehaviour {
 	void Shoot() {
 		Instantiate (shot, shotSpawnPoint.position, Quaternion.identity);
 	}
+
+	void OnTriggerEnter2D(Collider2D other){
+		if (other.name != "Destroyer" && !other.name.Contains("ShotPlayer")) {
+			Destroy (other.gameObject);
+			Destroy (this.gameObject);
+		}
+	}
+
 }

@@ -390,6 +390,7 @@ GameObject:
   - component: {fileID: 1331469202}
   - component: {fileID: 1331469201}
   - component: {fileID: 1331469200}
+  - component: {fileID: 1331469203}
   - component: {fileID: 1331469199}
   m_Layer: 0
   m_Name: Enemy
@@ -409,7 +410,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f18059c33657e844b61983864a131dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
+  speed: 1.5
   shot: {fileID: 1005016458099248, guid: 2378d22e239edec45a4a0c335b6a3ca1, type: 2}
   shotSpawnPoint: {fileID: 74871702}
 --- !u!50 &1331469200
@@ -483,13 +484,28 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1331469198}
   m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
-  m_LocalPosition: {x: 0, y: 4, z: 0}
+  m_LocalPosition: {x: -3.12, y: 5.73, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 74871702}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
+--- !u!58 &1331469203
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1331469198}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.6125
 --- !u!1 &1374888958
 GameObject:
   m_ObjectHideFlags: 0
@@ -594,6 +610,7 @@ GameObject:
   - component: {fileID: 1472794727}
   - component: {fileID: 1472794726}
   - component: {fileID: 1472794725}
+  - component: {fileID: 1472794729}
   - component: {fileID: 1472794728}
   m_Layer: 0
   m_Name: Player
@@ -694,6 +711,21 @@ MonoBehaviour:
   speed: 10
   shot: {fileID: 1023672689494910, guid: ce2fdb986f3f84242b273f9ffc5e9951, type: 2}
   shotSpawnPoint: {fileID: 208625786}
+--- !u!58 &1472794729
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1472794724}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.6125
 --- !u!1 &2089368540
 GameObject:
   m_ObjectHideFlags: 0
@@ -745,7 +777,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 20, y: 20}
+  m_Size: {x: 20, y: 15}
   m_EdgeRadius: 0
 --- !u!4 &2089368543
 Transform:
