@@ -52,4 +52,8 @@ public class EnemyController : MonoBehaviour {
 		}
 	}
 
+	void OnDestroy(){
+		GameController.Instance.AddScore ();
+	}
+
 }

@@ -1,11 +1,28 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
 
+	public static GameController Instance {
+		get;
+		private set;
+	}
+
+	void Awake(){
+		if (Instance != null && Instance != this) {
+			Destroy (gameObject);
+		} else {
+			Instance = this;
+		}
+	}
+
+	//==============================================
+
 	public GameObject enemy;
 	public int maxEnemies = 5;
+	public Text txtScore;
 
 	private int counterEnemies;
 	private float maxWidth, maxHeight;
@@ -28,7 +45,7 @@ public class GameController : MonoBehaviour {
 
 	IEnumerator EnemySpawning(){
 
-		while (counterEnemies <= maxEnemies) {
+		while (counterEnemies < maxEnemies) {
 			Vector2 targetPosition = new Vector2 (Random.Range(-maxWidth, maxWidth), maxHeight);
 
 			Instantiate (enemy, targetPosition, enemy.transform.rotation);
@@ -37,6 +54,12 @@ public class GameController : MonoBehaviour {
 			yield return new WaitForSeconds (Random.Range (1f, 5f));
 		}
 		
+	}
+
+	public void AddScore(){
+		int score = System.Int32.Parse (txtScore.text);
+		score += 100;
+		txtScore.text = score.ToString ();
 	}
 
 }
