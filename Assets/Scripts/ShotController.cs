@@ -19,7 +19,15 @@ public class ShotController : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other){
 		if (other.tag == tagTarget) {
 			GameObject exp = Instantiate (explosion, other.transform.position, Quaternion.identity);
-			Destroy (other.gameObject);
+
+			if (other.tag == "Player")
+				other.GetComponent<PlayerController> ().OnAttack ();
+			else {
+				Destroy (other.gameObject);
+				GameController.Instance.AddScore ();
+				GameController.Instance.CountDeadEnemies ();
+			}
+
 			Destroy (this.gameObject);
 			Destroy (exp, 2f);
 		}

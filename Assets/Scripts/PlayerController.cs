@@ -8,13 +8,16 @@ public class PlayerController : MonoBehaviour {
 	public GameObject shot;
 	public Transform shotSpawnPoint;
 	public GameObject explosion;
+	public int maxLives = 3;
 
 	private Rigidbody2D myRigidbody;
 	private Vector2 direction;
 	private float maxWidth;
+	private int counterLives;
 
 	void Start(){
 
+		counterLives = maxLives;
 		GetScreenMaxWidth ();
 
 		direction = Vector2.zero;
@@ -49,14 +52,25 @@ public class PlayerController : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other){
 		if (other.tag == "Enemy") {
-			GameObject expEnemy = Instantiate (explosion, other.transform.position, Quaternion.identity);
-			GameObject expPlayer = Instantiate (explosion, transform.position, Quaternion.identity);
+			counterLives = 0;
+			GameController.Instance.UpdateLives (counterLives);
 
-			Destroy (other.gameObject);
-			Destroy (this.gameObject);
+			Explode (other.gameObject);
+			Explode (this.gameObject);
+		}
+	}
 
-			Destroy (expEnemy, 2f);
-			Destroy (expPlayer, 2f);
+	void Explode(GameObject target){
+		GameObject exp = Instantiate (explosion, target.transform.position, Quaternion.identity);
+		Destroy (target);
+		Destroy (exp, 2f);
+	}
+
+	public void OnAttack(){
+		counterLives--;
+		GameController.Instance.UpdateLives (counterLives);
+		if (counterLives == 0) {
+			Explode (this.gameObject);
 		}
 	}
 
