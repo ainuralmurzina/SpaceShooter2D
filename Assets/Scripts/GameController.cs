@@ -22,6 +22,7 @@ public class GameController : MonoBehaviour {
 
 	public GameObject enemy;
 	public GameObject player;
+	public GameObject boss;
 	public int maxEnemies = 5;
 	public Text txtScore;
 	public Text txtLives;
@@ -55,7 +56,7 @@ public class GameController : MonoBehaviour {
 		StartCoroutine ("EnemySpawning");
 	}
 
-	void FinishGame(){
+	public void FinishGame(){
 		
 		StopCoroutine ("EnemySpawning");
 
@@ -64,6 +65,7 @@ public class GameController : MonoBehaviour {
 		foreach (GameObject g in GameObject.FindGameObjectsWithTag("Shot"))
 			Destroy (g);
 		Destroy (GameObject.FindGameObjectWithTag ("Player"));
+		Destroy (GameObject.FindGameObjectWithTag ("Boss"));
 
 		int lives = System.Int32.Parse (txtLives.text);
 		if (lives <= 0)
@@ -84,6 +86,11 @@ public class GameController : MonoBehaviour {
 			yield return new WaitForSeconds (Random.Range (1f, 5f));
 		}
 		
+	}
+
+	void SpawnBoss(){
+		Vector2 targetPosition = new Vector2 (Random.Range(-maxWidth, maxWidth), maxHeight);
+		Instantiate (boss, targetPosition, boss.transform.rotation);
 	}
 
 	public void AddScore(){
@@ -111,7 +118,9 @@ public class GameController : MonoBehaviour {
 
 	public void CountDeadEnemies(){
 		counterDeadEnemies++;
-		if (counterDeadEnemies >= maxEnemies)
-			FinishGame ();
+		if (counterDeadEnemies >= maxEnemies && GameObject.FindGameObjectWithTag("Boss") == null) {
+			SpawnBoss ();
+		}
 	}
+
 }

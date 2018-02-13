@@ -5,6 +5,7 @@ using UnityEngine;
 public class ShotController : MonoBehaviour {
 
 	public string tagTarget;
+	public string tagTarget2 = "";
 	public float speed;
 	public Vector2 direction;
 	public GameObject explosion;
@@ -17,11 +18,15 @@ public class ShotController : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D other){
-		if (other.tag == tagTarget) {
+		if (other.tag == tagTarget || other.tag == tagTarget2) {
 			GameObject exp = Instantiate (explosion, other.transform.position, Quaternion.identity);
 
 			if (other.tag == "Player")
 				other.GetComponent<PlayerController> ().OnAttack ();
+			else if (other.tag == "Boss") {
+				GameController.Instance.AddScore ();
+				other.GetComponent<BossController> ().OnAttack ();
+			}
 			else {
 				Destroy (other.gameObject);
 				GameController.Instance.AddScore ();
