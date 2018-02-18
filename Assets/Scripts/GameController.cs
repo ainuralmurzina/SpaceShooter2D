@@ -23,12 +23,14 @@ public class GameController : MonoBehaviour {
 	public GameObject enemy;
 	public GameObject player;
 	public GameObject boss;
+	public GameObject boss2;
 	public int maxEnemies = 5;
 	public Text txtScore;
 	public Text txtLives;
 	public GameObject pnlMenu;
 	public Text txtGameResult;
 	public int counterDeadEnemies;
+	public int wave = 1;
 
 	private int counterEnemies;
 	private float maxWidth, maxHeight;
@@ -77,20 +79,55 @@ public class GameController : MonoBehaviour {
 
 	IEnumerator EnemySpawning(){
 
-		while (counterEnemies < maxEnemies) {
-			Vector2 targetPosition = new Vector2 (Random.Range(-maxWidth, maxWidth), maxHeight);
+		if (wave == 1) {
+			while (counterEnemies < maxEnemies) {
+				Vector2 targetPosition = new Vector2 (Random.Range (-maxWidth, maxWidth), maxHeight);
 
-			Instantiate (enemy, targetPosition, enemy.transform.rotation);
-			counterEnemies++;
+				Instantiate (enemy, targetPosition, enemy.transform.rotation);
+				counterEnemies++;
 
-			yield return new WaitForSeconds (Random.Range (1f, 5f));
+				yield return new WaitForSeconds (Random.Range (1f, 5f));
+			}
 		}
-		
+
+		if (wave == 2) {
+			while (counterEnemies < maxEnemies) {
+				Vector2 targetPosition = new Vector2 (Random.Range (-maxWidth, maxWidth), maxHeight);
+
+				Instantiate (enemy, targetPosition, enemy.transform.rotation);
+				counterEnemies++;
+
+				yield return new WaitForSeconds (Random.Range (1f, 5f));
+			}
+		}
+
+
+		if (wave == 3) {
+			while (counterEnemies < maxEnemies) {
+				Vector2 targetPosition = new Vector2 (Random.Range (-maxWidth, maxWidth), maxHeight);
+
+				Instantiate (enemy, targetPosition, enemy.transform.rotation);
+				counterEnemies++;
+
+				yield return new WaitForSeconds (Random.Range (1f, 5f));
+			}
+		}
 	}
 
 	void SpawnBoss(){
-		Vector2 targetPosition = new Vector2 (Random.Range(-maxWidth, maxWidth), maxHeight);
-		Instantiate (boss, targetPosition, boss.transform.rotation);
+		if (wave == 1) {
+			Vector2 targetPosition = new Vector2 (Random.Range (-maxWidth, maxWidth), maxHeight);
+			Instantiate (boss, targetPosition, boss.transform.rotation);
+		}
+		if (wave == 2) {
+			Vector2 targetPosition = new Vector2 (Random.Range (-maxWidth, maxWidth), maxHeight);
+			Instantiate (boss2, targetPosition, boss2.transform.rotation);
+		}
+
+		if (wave == 3) {
+			Vector2 targetPosition = new Vector2 (Random.Range (-maxWidth, maxWidth), maxHeight);
+			Instantiate (boss2, targetPosition, boss2.transform.rotation);
+		}
 	}
 
 	public void AddScore(){
@@ -117,10 +154,23 @@ public class GameController : MonoBehaviour {
 	}
 
 	public void CountDeadEnemies(){
+		
 		counterDeadEnemies++;
 		if (counterDeadEnemies >= maxEnemies && GameObject.FindGameObjectWithTag("Boss") == null) {
 			SpawnBoss ();
 		}
+	}
+
+	public void BossDeath(){
+		wave++;
+
+		if (wave == 4) {
+			FinishGame ();
+			return;
+		}
+
+		ResetGame ();
+		StartCoroutine ("EnemySpawning");
 	}
 
 }
