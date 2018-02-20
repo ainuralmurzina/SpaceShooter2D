@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossController : MonoBehaviour {
+public class BossController_Adv : MonoBehaviour {
 
 	public float speed;
 	public GameObject shot;
-	public Transform shotSpawnPoint;
+	public Transform[] shotSpawnPoint;
 	public GameObject explosion;
 	public int maxLives = 3;
 
@@ -52,7 +52,9 @@ public class BossController : MonoBehaviour {
 
 	IEnumerator StartShoot(){
 		while (true) {
-			Instantiate (shot, shotSpawnPoint.position, Quaternion.identity);
+			for (int i = 0; i < shotSpawnPoint.Length; i++) {
+				Instantiate (shot, shotSpawnPoint[i].position, Quaternion.identity);
+			}
 			yield return new WaitForSeconds (Random.Range(1f, 3f));
 		}
 	}

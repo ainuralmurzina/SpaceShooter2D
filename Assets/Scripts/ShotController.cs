@@ -28,6 +28,7 @@ public class ShotController : MonoBehaviour {
 				other.GetComponent<BossController> ().OnAttack ();
 			}
 			else {
+				Debug.Log ("Enemy Killed");
 				Destroy (other.gameObject);
 				GameController.Instance.AddScore ();
 				GameController.Instance.CountDeadEnemies ();
