@@ -25,7 +25,7 @@ public class ShotController : MonoBehaviour {
 				other.GetComponent<PlayerController> ().OnAttack ();
 			else if (other.tag == "Boss") {
 				GameController.Instance.AddScore ();
-				other.GetComponent<BossController> ().OnAttack ();
+				other.GetComponent<BossController_Adv> ().OnAttack ();
 			}
 			else {
 				Debug.Log ("Enemy Killed");
