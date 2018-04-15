@@ -26,11 +26,11 @@ public class GameController : MonoBehaviour {
 	public GameObject boss2;
 	public int maxEnemies = 5;
 	public Text txtScore;
-	public Text txtLives;
 	public GameObject pnlMenu;
 	public Text txtGameResult;
 	public int counterDeadEnemies;
 	public int wave = 1;
+	public Transform lives;
 
 	private int counterEnemies;
 	private float maxWidth, maxHeight;
@@ -69,8 +69,13 @@ public class GameController : MonoBehaviour {
 		Destroy (GameObject.FindGameObjectWithTag ("Player"));
 		Destroy (GameObject.FindGameObjectWithTag ("Boss"));
 
-		int lives = System.Int32.Parse (txtLives.text);
-		if (lives <= 0)
+		int l = 4;
+		foreach (Transform t in lives) {
+			if (t.gameObject.activeSelf)
+				l--;
+		}
+
+		if (l <= 0)
 			txtGameResult.text = "YOU LOST!";
 		else
 			txtGameResult.text = "YOU WON!";
@@ -137,7 +142,9 @@ public class GameController : MonoBehaviour {
 	}
 
 	public void UpdateLives(int leftLives){
-		txtLives.text = leftLives.ToString ();
+
+		lives.GetChild (3 - leftLives).gameObject.SetActive (true);
+
 		if (leftLives <= 0)
 			FinishGame ();
 	}
@@ -148,7 +155,9 @@ public class GameController : MonoBehaviour {
 		counterEnemies = 0;
 		txtScore.text = counterEnemies.ToString ();
 
-		txtLives.text = player.GetComponent<PlayerController> ().maxLives.ToString ();
+		foreach (Transform t in lives)
+			t.gameObject.SetActive (false);
+		lives.GetChild (0).gameObject.SetActive (true);
 
 		txtGameResult.text = "";
 	}
